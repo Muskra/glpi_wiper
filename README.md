@@ -15,7 +15,6 @@ You need to create a config.ini file (if not created) into the root of the progr
 
 ### Available options:
 
-### Mandatory Options:
 ### [Server]
 ***
 #### Content:
