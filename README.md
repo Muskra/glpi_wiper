@@ -1,66 +1,73 @@
-## Description du projet:
-Ce programme développé en Python3 a pour but la suppression massive d'objets au sein d'une base GLPI.
-Il nécessite l'activation de l'APIrest sur le serveur vers lequel le script enverra les requêtes.
-***
-## Dépendances:
-### Modules Python:
-os, sys, configparser, requests
+## Project description:
+This Python3 program let you massively remove objects from the glpi RestAPI.
+This program is free of charge and can be forked by anyone who want's to.
+There is no warranty of any king and i am not responsible of any kind of damage made by the program.
 
-### Fonctionnement:
 ***
-Le script nécessite le remplisage d'un fichier de config situé à sa racine:
-config.ini
-### Différentes catégories d'options disponibles:
-***
-### Obligatoires:
+## Dependencies:
+### Python'n modules:
+os, sys, configparser, requests
+### Into GLPI:
+To make it work activate the RestAPI that provide GLPI, and generate the tokens needed by the program.
+
+### Usage:
+You need to create a config.ini file (if not created) into the root of the program (where main.py is).
+
+### Available options:
+
+### Mandatory Options:
 ### [Server]
 ***
-#### Contenu:
+#### Content:
 ```
-Le lien http de votre serveur glpi:
-url=http://adresse.exemple.local/glpi
+# HTTP link of the glpi server:
+url=http://adress.example.subdomain.domain/glpi
 
-N/B: Vous pouvez aussi saisir une adresse IP mais dois contenir à la fin le /glpi 
-exemple: http://192.168.1.55/glpi
+# N/B: You can also use IP address. Do not forget the /glpi at the end of the link 
+# example: http://192.168.1.55/glpi
 
-Le jeton de connexion de l'utilisateur:
+# User token to authenticate to RestAPI:
 user_token=VOTRE_TOKEN
 
-Et celui de l'application:
+# And the application one:
 app_token=TOKEN_APPLICATION
 ```
 ### [Object-Type]
 ***
-#### Contenu:
+#### Content:
 ```
-Le type d'appareil/ou catégorie d'appareils ciblée:
+# Device type you want to remove:
 device=Computer
 
-N/B: Types d'appareils utilisables: Computer, Monitor, NetworkEquipment, Peripheral, Phone, Printer, Software
+# N/B: Type that exists by default: Computer, Monitor, NetworkEquipment, Peripheral, Phone, Printer, Software
 ```
-### Optionnelles:
+### Optionals:
 
 ### [Options]
 ***
-#### Contenu:
+#### Content:
 ```
-Cible les objets de la corbeille ou non. (0 ou 1)
-0 est la valeur par défaut et signifie que l'on ne cible pas la corbeille.
+# If you want to remove the trashbin items, 0 is default and 1 means deleted ones.
 is_deleted=0
 
-Vous pouvez spécifier un interval afin d'aller chercher un nombre d'objets précis à chaque itération du script. La valeur par défaut est: 0-10000
-Celle-ci ne dois pas éxcéder l'option: max_range
-Vous pouvez aussi la décrire comme par exemple: 42-4577
+# By default the program will iterate through a default range of items: 0-10000 (0 to 10000).
+# You can specify a specific number of items as needed.
+# This option can't exceed the max_range option.
+# example: 42-4577
 items_range=0-10000
 
-L'option ci dessous permet de choisir combien d'objets au maximum nous allons supprimer (n'éxcédant pas 999999). ex: max_range=4577
+# The option below will determinate the maximum range the wiper will act. 
+# Do NOT forget that it will goes from the end of the range like:
+# If you have items_range=0-4577 it will remove first the 4577 lasts items from the base.
+# This option can't exceed 999999 items and can be further from the items_range option.
 max_range=
 
-ATTENTION La prochaine option quand à elle permet d'outre-passer les mise en corbeille et donc de supprimer totalement tout objet traité par le script qu'ils soient dans la corbeille ou non. A utiliser avec précaution.
-Valeur par défaut: False (True l'active)
+# BEWARE the last option can be dangerous if you're not carefull when using it.
+# It's needed when you remove items from the trashbin. BUT, if you use it on a range of items that are not already in the trashbin, it will erase all of them from the base. USE WITH CAUTION.
+# Default value is False (True will activate it)
 wipe=False
 ```
-### Exemple de configuration avec toutes les options réunies:
+### Configuration example with all options:
 ***
 ```
 # This is the config file of GLPI_wiper
